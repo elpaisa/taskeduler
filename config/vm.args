@@ -1,0 +1,27 @@
+## Name of the node
+# XXX: why not -sname taskeduler@localhost ?
+-name taskeduler@127.0.0.1
+
+## Cookie for distributed erlang
+-setcookie taskeduler
+
+## Heartbeat management; auto-restarts VM if it dies or becomes unresponsive
+## (Disabled by default..use with caution!)
+-heart
+
+## Enable kernel poll and a few async threads
++K true
++A 5
+
+# The i option makes the emulator ignore any break signal
++Bi
+
+# Sets  the  mapping  of  warning  messages  for error_logger . Messages sent to
+# the error logger using one of the warning routines can be mapped either to
+# errors (default), warnings ( +W w ), or info reports ( +W i ). The current
+# mapping can be retrieved using  error_logger:warning_map/0 . See
+# error_logger(3) for further information.
++W w
+
+## Tweak GC to run more often
+##-env ERL_FULLSWEEP_AFTER 10

@@ -1,0 +1,7 @@
+{
+  "name": "taskeduler",
+  "version": "0.1.0",
+  "description": "Erlang distributed task scheduler",
+  "title": "API Docs for erlang taskeduler",
+  "url" : "https://github.com/elpaisa/taskeduler"
+}

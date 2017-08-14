@@ -1,0 +1,21 @@
+%%-*- mode: erlang -*-
+[
+  {taskeduler, [
+      {max_workers, 12},
+      {max_retries, 12},
+      {controller_module, test_controller},
+      {rest_handler, test_controller},
+      {service_name, "/taskeduler/v1"},
+      {nodes, ['nonode@nohost']},
+      {workers, [
+          {test,
+              [ {re_sync_days, 7}, {max_fetch, 2000}],
+              [ {test_regular, 60, minutes}, {test_daily, 1, days} ] %% Worker definitions
+          }
+      ]}
+  ]},
+  {sasl, [
+    {sasl_error_logger, false}
+  ]}
+].
+% vim:ft=erlang

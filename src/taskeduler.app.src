@@ -1,0 +1,27 @@
+%%-*- mode: erlang -*-
+
+{application, taskeduler, [
+    {description, "Erlang distributed task scheduler service"},
+    {vsn, git},
+    {modules, []},
+    {registered, [
+        taskeduler_srv,
+        taskeduler_sup
+    ]},
+    {applications, 
+     [
+      sasl,
+      kernel,
+      stdlib,
+      jsx,
+      gascheduler,
+      qdate,
+      etspersist,
+      utils,
+      cowboy
+    ]},
+    {mod, {taskeduler_app, []}},
+    {env, []}
+]}.
+
+% vim:ft=erlang
