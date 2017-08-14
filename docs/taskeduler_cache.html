@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Module taskeduler_cache</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module taskeduler_cache</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>Handles the cache for the Workers.
+<p>Copyright © 2017 JOHN LEYTON DIAZ.
+  
+   Created : 06. Mar 2017 3:51 PM
+  </p>
+
+<p><b>Authors:</b> elpaisa.</p>
+
+<h2><a name="description">Description</a></h2>Handles the cache for the Workers
+  
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#cache_worker-5">cache_worker/5</a></td><td>Caches a worker by name.</td></tr>
+<tr><td valign="top"><a href="#cache_workers-1">cache_workers/1</a></td><td>Saves all workers into a flat list in an ets.</td></tr>
+<tr><td valign="top"><a href="#check_last_run-3">check_last_run/3</a></td><td>Determines if a worker last run time is older than the interval
+  specified in its config.</td></tr>
+<tr><td valign="top"><a href="#get-2">get/2</a></td><td>Gets an item from an ets.</td></tr>
+<tr><td valign="top"><a href="#insert-2">insert/2</a></td><td>Inserts an item into an ets.</td></tr>
+<tr><td valign="top"><a href="#set_ets-1">set_ets/1</a></td><td>Creates an ets table by name.</td></tr>
+<tr><td valign="top"><a href="#start-0">start/0</a></td><td>starts cache, prepares the ets tables.</td></tr>
+<tr><td valign="top"><a href="#stop-0">stop/0</a></td><td>stops cache, removes the ets tables.</td></tr>
+<tr><td valign="top"><a href="#update-3">update/3</a></td><td>Updates an item in an ets.</td></tr>
+<tr><td valign="top"><a href="#worker_names-0">worker_names/0</a></td><td>Gets all the worker names specified in the config, cached in the workers table.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="cache_worker-5">cache_worker/5</a></h3>
+<div class="spec">
+<p><tt>cache_worker(WorkerName::atom(), Type::atom(), Interval::integer(), IntervalType::atom(), Opts::any()) -&gt; ok</tt><br></p>
+<p><tt>WorkerName</tt>: Name of the worker to cache<br>
+<tt>Type</tt>: name of the module that this worker beholds to<br>
+<tt>Interval</tt>: interval of time that this worker will take, specified in config<br>
+<tt>IntervalType</tt>: type of interval "days, minutes, seconds"<br>
+<tt>Opts</tt>: options specified in config for the worker
+ <br>
+</p>
+</div><p>Caches a worker by name
+ </p>
+
+<h3 class="function"><a name="cache_workers-1">cache_workers/1</a></h3>
+<div class="spec">
+<p><tt>cache_workers(X1::{Type::atom(), _Opts::any(), Workers::list()}) -&gt; ok</tt><br></p>
+</div><p>Saves all workers into a flat list in an ets
+ </p>
+
+<h3 class="function"><a name="check_last_run-3">check_last_run/3</a></h3>
+<div class="spec">
+<p><tt>check_last_run(WorkerName::atom(), Interval::integer(), IntervalType::atom()) -&gt; boolean()</tt><br></p>
+<p><tt>WorkerName</tt>: Name of the worker to check against<br>
+<tt>Interval</tt>: Number of (minutes,days, etc) to check<br>
+<tt>IntervalType</tt>: (days, minutes, etc) to use for the time difference
+ <br>
+</p>
+</div><p>Determines if a worker last run time is older than the interval
+  specified in its config
+ </p>
+
+<h3 class="function"><a name="get-2">get/2</a></h3>
+<div class="spec">
+<p><tt>get(ETS::atom(), Key::any()) -&gt; {ok, Table::tuple(), any()}</tt><br></p>
+<p><tt>ETS</tt>: name of the table to get the key from<br>
+<tt>Key</tt>: key name to get from the table
+ <br>
+</p>
+</div><p>Equivalent to <a href="#get-3"><tt>get(Table, ETS, Key)</tt></a>.</p>
+<p>Gets an item from an ets</p>
+
+<h3 class="function"><a name="insert-2">insert/2</a></h3>
+<div class="spec">
+<p><tt>insert(ETS::atom(), Key::any()) -&gt; {ok, Table::tuple(), any()}</tt><br></p>
+</div><p>Equivalent to <a href="#insert-3"><tt>insert(Table, ETS, Value)</tt></a>.</p>
+<p>Inserts an item into an ets</p>
+
+<h3 class="function"><a name="set_ets-1">set_ets/1</a></h3>
+<div class="spec">
+<p><tt>set_ets(ETS::atom()) -&gt; tuple()</tt><br></p>
+<p><tt>ETS</tt>: name of the table to create
+ <br>
+</p>
+</div><p>Creates an ets table by name</p>
+
+<h3 class="function"><a name="start-0">start/0</a></h3>
+<div class="spec">
+<p><tt>start() -&gt; ok | {error, term()}</tt><br></p>
+</div><p>starts cache, prepares the ets tables
+ </p>
+
+<h3 class="function"><a name="stop-0">stop/0</a></h3>
+<div class="spec">
+<p><tt>stop() -&gt; ok | {error, term()}</tt><br></p>
+</div><p>stops cache, removes the ets tables
+ </p>
+
+<h3 class="function"><a name="update-3">update/3</a></h3>
+<div class="spec">
+<p><tt>update(ETS::atom(), Position::integer(), Value::any()) -&gt; {ok, Table::tuple(), any()}</tt><br></p>
+</div><p>Equivalent to <a href="#update-4"><tt>update(Table, ETS, Position, Value)</tt></a>.</p>
+<p>Updates an item in an ets</p>
+
+<h3 class="function"><a name="worker_names-0">worker_names/0</a></h3>
+<div class="spec">
+<p><tt>worker_names() -&gt; list()</tt><br></p>
+</div><p>Gets all the worker names specified in the config, cached in the workers table
+ </p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc, Aug 14 2017, 11:50:26.</i></p>
+</body>
+</html>

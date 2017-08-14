@@ -1,0 +1,5 @@
+%% encoding: UTF-8
+{application,taskeduler}.
+{modules,[controller,task,taskeduler,taskeduler_api,taskeduler_app,
+          taskeduler_cache,taskeduler_service,taskeduler_srv,taskeduler_stats,
+          taskeduler_sup,taskeduler_sync,taskeduler_v1_http,test_controller]}.

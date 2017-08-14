@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Module taskeduler_sync</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module taskeduler_sync</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>Common sync functions for the workers.
+<p>Copyright © 2017 JOHN LEYTON DIAZ.
+  
+   Created : 06. Mar 2017 3:51 PM
+  </p>
+
+<p><b>Authors:</b> elpaisa.</p>
+
+<h2><a name="description">Description</a></h2><p>Common sync functions for the workers</p>
+  
+   Handles all the processes for the specified workers
+  
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#by_date-4">by_date/4</a></td><td>Starts working a task list for a specific time interval, usually 1 day.</td></tr>
+<tr><td valign="top"><a href="#do_resume-3">do_resume/3</a></td><td>Attempts to resume failed tasks for a specific worker.</td></tr>
+<tr><td valign="top"><a href="#do_work-4">do_work/4</a></td><td>Actual work function that handles the tasks list and sends them
+  to the scheduler.</td></tr>
+<tr><td valign="top"><a href="#get_type-1">get_type/1</a></td><td>Gets worker config for a specific module.</td></tr>
+<tr><td valign="top"><a href="#get_worker-1">get_worker/1</a></td><td>Gets worker info from cache.</td></tr>
+<tr><td valign="top"><a href="#handle_sync-6">handle_sync/6</a></td><td>Handle the sync task, this function is supposed to be called
+  by a scheduler task.</td></tr>
+<tr><td valign="top"><a href="#heartbeat-5">heartbeat/5</a></td><td>Executes a function at given intervals.</td></tr>
+<tr><td valign="top"><a href="#heartbeat_start-2">heartbeat_start/2</a></td><td>Starts a new process to execute an arbitrary function at intervals.</td></tr>
+<tr><td valign="top"><a href="#heartbeat_stop-1">heartbeat_stop/1</a></td><td>Stops the heartbeat process.</td></tr>
+<tr><td valign="top"><a href="#init-0">init/0</a></td><td>Sets all necessary elements for start running.</td></tr>
+<tr><td valign="top"><a href="#is_running-1">is_running/1</a></td><td>Seeks a worker and gets its Pid, if not running returns false.</td></tr>
+<tr><td valign="top"><a href="#new_process-2">new_process/2</a></td><td>Spawn a process with a given name, _Args = {ModuleName, Args}.</td></tr>
+<tr><td valign="top"><a href="#re_sync-4">re_sync/4</a></td><td>Re-syncs all tasks documents for the ttl period KEEP_INTERVAL in days,
+  specified config file.</td></tr>
+<tr><td valign="top"><a href="#resume_any-6">resume_any/6</a></td><td></td></tr>
+<tr><td valign="top"><a href="#start_scheduler-1">start_scheduler/1</a></td><td>Starts the scheduler with the given configuration params in config file.</td></tr>
+<tr><td valign="top"><a href="#start_worker-4">start_worker/4</a></td><td>Spawn a process with a given name, _Args = {ModuleName, Args},
+  all functions to call must be within taskeduler_sync.</td></tr>
+<tr><td valign="top"><a href="#stop-0">stop/0</a></td><td>Stops the cache.</td></tr>
+<tr><td valign="top"><a href="#stop-1">stop/1</a></td><td>stops a process by its name, concat(Mod, SyncType) to get PID from name.</td></tr>
+<tr><td valign="top"><a href="#stop_all-1">stop_all/1</a></td><td>Stops all workers for a specific module.</td></tr>
+<tr><td valign="top"><a href="#task_done-3">task_done/3</a></td><td>Executes the callback function for every task, updates the status.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="by_date-4">by_date/4</a></h3>
+<div class="spec">
+<p><tt>by_date(WorkerName::atom(), X2::{Type::atom(), Opts::list()}, X3::term(), TaskList::list()) -&gt; ok</tt><br></p>
+</div><p>Starts working a task list for a specific time interval, usually 1 day
+ </p>
+
+<h3 class="function"><a name="do_resume-3">do_resume/3</a></h3>
+<div class="spec">
+<p><tt>do_resume(WorkerName::atom(), Module::list(), Status::list()) -&gt; ok</tt><br></p>
+</div><p>Attempts to resume failed tasks for a specific worker.
+ </p>
+
+<h3 class="function"><a name="do_work-4">do_work/4</a></h3>
+<div class="spec">
+<p><tt>do_work(WorkerName::atom(), X2::{Type::atom(), Opts::tuple()}, X3::{Interval::integer(), IntervalType::atom(), _AdditionalArgs::list()}, TaskList::list()) -&gt; ok</tt><br></p>
+</div><p>Actual work function that handles the tasks list and sends them
+  to the scheduler
+ </p>
+
+<h3 class="function"><a name="get_type-1">get_type/1</a></h3>
+<div class="spec">
+<p><tt>get_type(Type::atom()) -&gt; list() | undefined</tt><br></p>
+</div><p>Gets worker config for a specific module
+ </p>
+
+<h3 class="function"><a name="get_worker-1">get_worker/1</a></h3>
+<div class="spec">
+<p><tt>get_worker(WorkerName::atom()) -&gt; list()</tt><br></p>
+</div><p>Gets worker info from cache
+ </p>
+
+<h3 class="function"><a name="handle_sync-6">handle_sync/6</a></h3>
+<div class="spec">
+<p><tt>handle_sync(WorkerName::atom(), Task::integer(), StartTime::integer(), EndTime::list(), Type::atom(), _Opts::term()) -&gt; {ok, Task::integer()}</tt><br></p>
+</div><p>Handle the sync task, this function is supposed to be called
+  by a scheduler task
+ </p>
+
+<h3 class="function"><a name="heartbeat-5">heartbeat/5</a></h3>
+<div class="spec">
+<p><tt>heartbeat(Mod::atom(), Func::atom(), Params::list(), Interval::integer(), Type::atom()) -&gt; term()</tt><br></p>
+</div><p>Executes a function at given intervals
+ </p>
+
+<h3 class="function"><a name="heartbeat_start-2">heartbeat_start/2</a></h3>
+<div class="spec">
+<p><tt>heartbeat_start(HeartBeat::atom(), X2::{Mod::atom(), Func::atom(), Params::list(), Interval::integer(), Type::atom()}) -&gt; ok</tt><br></p>
+</div><p>Starts a new process to execute an arbitrary function at intervals
+ </p>
+
+<h3 class="function"><a name="heartbeat_stop-1">heartbeat_stop/1</a></h3>
+<div class="spec">
+<p><tt>heartbeat_stop(HeartBeat::atom()) -&gt; term()</tt><br></p>
+</div><p>Stops the heartbeat process
+ </p>
+
+<h3 class="function"><a name="init-0">init/0</a></h3>
+<div class="spec">
+<p><tt>init() -&gt; ok</tt><br></p>
+</div><p>Sets all necessary elements for start running
+ </p>
+
+<h3 class="function"><a name="is_running-1">is_running/1</a></h3>
+<div class="spec">
+<p><tt>is_running(WorkerName::atom()) -&gt; pid() | false</tt><br></p>
+</div><p>Seeks a worker and gets its Pid, if not running returns false
+ </p>
+
+<h3 class="function"><a name="new_process-2">new_process/2</a></h3>
+<div class="spec">
+<p><tt>new_process(ProcessName::atom(), X2::{Mod::atom(), Function::atom(), Args::list()}) -&gt; pid()</tt><br></p>
+</div><p>Spawn a process with a given name, _Args = {ModuleName, Args}
+ </p>
+
+<h3 class="function"><a name="re_sync-4">re_sync/4</a></h3>
+<div class="spec">
+<p><tt>re_sync(WorkerName::atom(), X2::{Type::atom(), Opts::list(), _AdditionalArgs::term()}, X3::{Interval::integer(), IntervalType::atom()}, _TaskList::list()) -&gt; ok</tt><br></p>
+</div><p>Re-syncs all tasks documents for the ttl period KEEP_INTERVAL in days,
+  specified config file
+ </p>
+
+<h3 class="function"><a name="resume_any-6">resume_any/6</a></h3>
+<div class="spec">
+<p><tt>resume_any(ResumeWorkerName, WorkerName, StartTime, EndTime, X5, TaskList) -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="start_scheduler-1">start_scheduler/1</a></h3>
+<div class="spec">
+<p><tt>start_scheduler(Scheduler::atom()) -&gt; ok</tt><br></p>
+</div><p>Starts the scheduler with the given configuration params in config file
+ </p>
+
+<h3 class="function"><a name="start_worker-4">start_worker/4</a></h3>
+<div class="spec">
+<p><tt>start_worker(Name::atom(), X2::{Type::atom(), _Opts::list()}, X3::{Interval::integer(), IntervalType::atom(), SyncType::atom(), _AdditionalArguments::term()}, TaskList::list()) -&gt; {Name::atom(), {Type::atom(), _Opts::list()}, {Interval::integer(), IntervalType::atom()}}</tt><br></p>
+</div><p>Spawn a process with a given name, _Args = {ModuleName, Args},
+  all functions to call must be within taskeduler_sync.
+ </p>
+
+<h3 class="function"><a name="stop-0">stop/0</a></h3>
+<div class="spec">
+<p><tt>stop() -&gt; ok</tt><br></p>
+</div><p>Stops the cache
+ </p>
+
+<h3 class="function"><a name="stop-1">stop/1</a></h3>
+<div class="spec">
+<p><tt>stop(WorkerName::atom()) -&gt; list()</tt><br></p>
+</div><p>stops a process by its name, concat(Mod, SyncType) to get PID from name
+ </p>
+
+<h3 class="function"><a name="stop_all-1">stop_all/1</a></h3>
+<div class="spec">
+<p><tt>stop_all(Workers::list()) -&gt; list()</tt><br></p>
+</div><p>Stops all workers for a specific module
+ </p>
+
+<h3 class="function"><a name="task_done-3">task_done/3</a></h3>
+<div class="spec">
+<p><tt>task_done(Scheduler::pid(), X2::term(), X3::{ok, term()} | {error, term()}) -&gt; ok</tt><br></p>
+</div><p>Executes the callback function for every task, updates the status.
+ </p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc, Aug 14 2017, 11:50:26.</i></p>
+</body>
+</html>
